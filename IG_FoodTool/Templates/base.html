@@ -1,0 +1,58 @@
+{% include 'header.html' %}
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/scrap.css' %}">
+<button type="button" class="btn btn-primary " onclick="location.href='http://127.0.0.1:8000/regionsearch/'"
+    style="position: fixed;bottom: 20px; right: 20px; border-radius: 50%;font-size:21px;">
+    < </button>
+
+        <div class="table">
+            <div class='row' style="height: 100%;">
+
+                <div style="height: max;" class="col-sm-2 ">
+                </div>
+
+                <div style="height:100vh ;" class="col-sm-10 inp">
+                    <!-- <form>
+                <div class="input-group input-group-lg">
+                    <span class="input-group-text" id="inputGroup-sizing-lg">IG Name</span>
+                    <input type="text" class="form-control" aria-label="Sizing example input"
+                        aria-describedby="inputGroup-sizing-lg">
+                </div>
+                
+            </form> -->
+
+                    <form class="container" action="" method="post">{% csrf_token %}
+                        <div class="row">
+                            <div class="col-sm-12 inp " style="height:80px; font-size:60px">input information</div>
+
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-6  input-group input-group-lg">
+                                <span class="input-group-text" id="inputGroup-sizing-lg">IG Name</span>
+                                <input type="text" class="form-control" aria-label="Sizing example input"
+                                    aria-describedby="inputGroup-sizing-lg" name="AccountName">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12 " style="height:50px"></div>
+                        </div>
+                        <div class="row">
+                            <select class="col-sm-6  form-select" aria-label="Default select example" name="Round">
+                                <option selected value="0">蒐集量(下拉次數)</option>
+                                {% for i in round%}
+                                <option value="{{i}}">{{i}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12 inp" style="height:100px">
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>

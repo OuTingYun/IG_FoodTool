@@ -1,0 +1,138 @@
+{% include 'header.html' %}
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/region.css' %}">
+<button type="button" class="btn btn-primary " onclick="location.href='http://127.0.0.1:8000/scrap/'"
+    style="position: fixed;bottom: 20px; right: 20px; border-radius: 50%;font-size:21px;">></button>
+<div class="table">
+    <div class='row' style="height: 100%;">
+
+        <div style="height: max;" class="col-sm-2 ">
+            <!-- background-color: chartreuse -->
+            <form action="" method="post" style='position: fixed;top:15px;margin-left: -55px;'>{% csrf_token %}
+                <button type="submit" class="btn btn-primary">Submit</button>
+
+                <div class="accordion" id="accordionPanelsStayOpenExample">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="panelsStayOpen-headingOne">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true"
+                                aria-controls="panelsStayOpen-collapseOne">
+                                選擇地區
+                            </button>
+                        </h2>
+                        <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show"
+                            aria-labelledby="panelsStayOpen-headingOne">
+                            <div class="accordion-body">
+                                {% for k,v in Region.items %}
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value={{v}} id="region{{v}}"
+                                        name="Region">
+                                    <label class="form-check-label" for="region{{v}}">
+                                        {{k}}
+                                    </label>
+                                </div>
+                                {% endfor %}
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false"
+                                aria-controls="panelsStayOpen-collapseTwo">
+                                選擇帳號
+                            </button>
+                        </h2>
+                        <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse"
+                            aria-labelledby="panelsStayOpen-headingTwo">
+                            <div class="accordion-body">
+                                {% for acc in IG_Acccount %}
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value={{acc.AccountName}}
+                                        id={{acc.AccountName}} name="Account">
+                                    <label class="form-check-label" for={{acc.AccountName}}>
+                                        {{acc.AccountName}}
+                                    </label>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="panelsStayOpen-headingThree">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false"
+                                aria-controls="panelsStayOpen-collapseThree">
+                                排序方式
+                            </button>
+                        </h2>
+                        <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse"
+                            aria-labelledby="panelsStayOpen-headingThree">
+                            <div class="accordion-body">
+                                {% for way,value in Sort.items %}
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="Sort" id="Sort{{value}}"
+                                        value="{{value}}">
+                                    <label class="form-check-label" for="Sort{{value}}">
+                                        {{way}}
+                                    </label>
+                                </div>
+
+
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </form>
+
+
+        </div>
+        <div style="height: max" class="col-sm-10">
+            <!-- background-color: coral; -->
+            {% for r in result %}
+            <div class="row">
+                {% for item in r %}
+                <div class="col imgarea">
+                    <!-- style="background-color:burlywood" -->
+                    <figure class=" figure">
+                        <img src="../static/picture/{{item.AccountName}}/{{item.PostID}}.jpg"
+                            class="figure-img img-fluid rounded pp" alt="Elephant at sunset" type="button"
+                            data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight{{item.PostID}}"
+                            aria-controls="offcanvasRight{{item.PostID}}">
+                        <figcaption class="figure-caption">{{item.Place}} <a
+                                href="https://www.instagram.com/{{item.AccountName}}">
+                                {{item.AccountName}} </a></figcaption>
+                    </figure>
+                    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight{{item.PostID}}"
+                        aria-labelledby="offcanvasRightLabel{{item.PostID}}">
+                        <div class="offcanvas-header">
+                            <h5 id="offcanvasRightLabel{{item.PostID}}">{{item.Place}} {{item.AccountName}}</h5>
+                            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+                                aria-label="Close"></button>
+                        </div>
+                        <div class="offcanvas-body">
+                            <p><a href="https://www.instagram.com/p/{{item.PostID}}/">文章網址 HERE</a></p>
+                            {{item.Content}}
+
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% endfor %}
+            {% if nothing %}
+            <div class="row">
+                <div class="col" style="height: 100px;text-align: center;font-size: 100px;">
+                    <!-- background-color:burlywood; -->
+                    Nothing Found
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
