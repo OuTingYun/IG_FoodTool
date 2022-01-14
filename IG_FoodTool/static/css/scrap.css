@@ -1,0 +1,16 @@
+@media screen and (min-width:1115px){
+    .table{
+        width: 1150px;
+    }
+}
+.inp{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.pp{
+border-width:3px;
+border-style:dashed;
+border-color:black;
+padding:5px;
+}
